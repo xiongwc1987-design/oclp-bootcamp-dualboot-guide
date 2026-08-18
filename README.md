@@ -11,6 +11,30 @@ If your Mac is old enough that Apple's installer says "not compatible," you have
 Boot Camp Windows partition on the *same* disk, and OCLP's setup isn't behaving the way
 the docs imply it should — this is probably for you.
 
+## The working boot chain (end state)
+
+```mermaid
+flowchart TD
+    A[Power on] -->|hold Option| B[Apple native Startup Manager]
+    B -->|select Macintosh HD| C[Native unpatched boot\nno spoof, no kexts]
+    B -->|select Windows| D[Real Windows\nBoot Camp partition]
+    B -->|select EFI Boot| E[OpenCore.efi\non its OWN dedicated ~200MB\nFAT32 partition]
+    E --> F[OpenCore's own dark-themed menu\nShowPicker must be enabled]
+    F -->|select macOS entry| G[SMBIOS spoof + Lilu/WhateverGreen/\nAirportBrcmFixup load]
+    F -->|select Windows entry| D
+    G --> H[Patched macOS boots\nsysctl hw.model shows spoofed model]
+
+    style E fill:#2b6cb0,color:#fff
+    style F fill:#2b6cb0,color:#fff
+    style G fill:#2f855a,color:#fff
+    style H fill:#2f855a,color:#fff
+```
+
+The two blue/green boxes are the parts that silently fail if any of the fixes in this
+guide are skipped — a shared EFI partition, a hidden picker, or missing SMBIOS
+spoofing each break a different link in this chain while everything *looks* installed
+correctly.
+
 ---
 
 ## 0. Before touching EFI/bootloader anything: rule out a misbehaving background process
