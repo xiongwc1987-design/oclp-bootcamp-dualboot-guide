@@ -1,5 +1,7 @@
 # OpenCore Legacy Patcher + Boot Camp dual-boot upgrade — hard-won lessons
 
+🔗 **https://github.com/xiongwc1987-design/oclp-bootcamp-dualboot-guide**
+
 **TL;DR — the upgrade path this guide is based on**: MacBookAir7,2 (2015 13" MacBook
 Air, Broadwell, non-T2), Boot Camp dual-boot with Windows on the same disk, upgraded
 from **macOS Monterey 12.7.6 → macOS Ventura 13.7.8** using **OpenCore Legacy Patcher
